@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "X2aMdSuYwzENm4lJatDWNBUBkO2ViBg4pqACHZM0Rb9UniqPk5r1p9yRNY29bqNkChZnIIIh7chZggBEm/GS8A==",
+  "success": true,
+  "projectFilePath": "c:\\Projets\\ARH\\ARH.Front\\ARH.Front.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\garf\\.nuget\\packages\\microsoft.aspnetcore.authentication.negotiate\\6.0.11\\microsoft.aspnetcore.authentication.negotiate.6.0.11.nupkg.sha512",
+    "C:\\Users\\garf\\.nuget\\packages\\microsoft.aspnetcore.connections.abstractions\\6.0.11\\microsoft.aspnetcore.connections.abstractions.6.0.11.nupkg.sha512",
+    "C:\\Users\\garf\\.nuget\\packages\\microsoft.extensions.features\\6.0.11\\microsoft.extensions.features.6.0.11.nupkg.sha512",
+    "C:\\Users\\garf\\.nuget\\packages\\system.directoryservices.protocols\\6.0.1\\system.directoryservices.protocols.6.0.1.nupkg.sha512",
+    "C:\\Users\\garf\\.nuget\\packages\\system.io.pipelines\\6.0.3\\system.io.pipelines.6.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
