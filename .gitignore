@@ -6,7 +6,11 @@
 [Oo]bj
 [Bb]in
 [Dd]ebug
-[Bb]uild/
+[Bb]uild
+[Oo]bj/**/*
+[Bb]in/**/*
+[Dd]ebug/**/*
+[Bb]uild/**/*
 *.user
 *.suo
 *.exe
@@ -48,4 +52,5 @@ Ankh.NoLoad
 
 packages/**
 .vs/
+.vscode/
 .idea/
