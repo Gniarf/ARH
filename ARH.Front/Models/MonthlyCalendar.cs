@@ -4,6 +4,13 @@ namespace ARH.Front.Models
     {
         public string UserName { get; set; }
         public IEnumerable<DayData> Days { get; set; }
+        
+        public MonthlyCalendar() 
+        {  
+            UserName = string.Empty;
+            Days = new DayData[0];
+        }
+
         public MonthlyCalendar(string userName, int month, int year)
         {
             UserName = userName;

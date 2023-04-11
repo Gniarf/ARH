@@ -1,3 +1,5 @@
+using ARH.Front.Contracts;
+using ARH.Front.Services;
 using Microsoft.AspNetCore.Authentication.Negotiate;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +13,7 @@ builder.Services.AddAuthorization(options => {
     options.FallbackPolicy = options.DefaultPolicy;
 });
 builder.Services.AddRazorPages();
+builder.Services.AddSingleton<ICalendarService, CalendarService>();
 
 var app = builder.Build();
 
