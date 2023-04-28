@@ -1,6 +1,6 @@
 namespace ARH.Front.Models
 {
-    public class DayData
+    public class DailyRecord
     {
         /// <summary>
         /// Clé technique, sans intérêt métier.
@@ -11,28 +11,28 @@ namespace ARH.Front.Models
         /// </summary>
         public DateTime Day { get; set; }
         /// <summary>
-        /// <c>true</c> si le jour est férié, <c>false</c> sinon
-        /// </summary>
-        public bool Free { get; set; }
-        /// <summary>
         /// temps travaillé dans les locaux
         /// </summary>
-        public Length OnSite { get; set; }
+        public string OnSite { get; set; } = Length.O.ToString();
         /// <summary>
         /// temps passé en télétravail
         /// </summary>
-        public Length AtHome { get; set; }
+        public string AtHome { get; set; } = Length.O.ToString();
         /// <summary>
         /// temps passé en congés payés
         /// </summary>
-        public Length PayedVacation { get; set; }
+        public string PayedVacation { get; set; } = Length.O.ToString();
         /// <summary>
         /// temps passé en absence non payée
         /// </summary>
-        public Length UnpayedVacation { get; set; }
+        public string UnpayedVacation { get; set; } = Length.O.ToString();
         /// <summary>
         /// temps passé en arrêt maladie
         /// </summary>
-        public Length Sickness { get; set; }
+        public string Sickness { get; set; } = Length.O.ToString();
+        /// <summary>
+        /// identifiant de l'utilisateur concerné par la saisie
+        /// </summary>
+        public string UserId { get; set; } = string.Empty;
     }
 }

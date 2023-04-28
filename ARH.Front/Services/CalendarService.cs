@@ -5,13 +5,22 @@ namespace ARH.Front.Services
 {
     public class CalendarService : ICalendarService
     {
+        private readonly ICalendarDalService calendarDalService;
+
+        public CalendarService(ICalendarDalService calendarDalService)
+        {
+            this.calendarDalService = calendarDalService;
+        }
+
         public MonthlyCalendar GetCalendar(CalendarRequest request)
         {
             if (request == null)
             {
                 throw new ArgumentNullException();
             }
-            return new MonthlyCalendar(request.UserName, request.Date.Month, request.Date.Year);
+            MonthlyCalendar result = calendarDalService.Get(request);
+            return result;
+            //return new MonthlyCalendar(request.UserName, request.Date.Month, request.Date.Year);
         }
     }
 }

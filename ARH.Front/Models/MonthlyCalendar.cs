@@ -1,7 +1,10 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace ARH.Front.Models
 {
     public class MonthlyCalendar
     {
+        [Key]
         public string UserName { get; set; }
         public IEnumerable<DayData> Days { get; set; }
         
