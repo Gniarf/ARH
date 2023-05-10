@@ -40,3 +40,16 @@ Jean Dupont pour le mois d'avril 2023
 
 Commentaire : 
 Télétravail pour suivi travaux à la maison
+
+## précisions sur le métier
+
+### saisie mensuelle individuelle
+
+- Une saisie correspond au temps passé sur site, en télétravail, en déplacement, en congés ou autres absences, payées ou non. 
+- Une saisie est en portion de journée (0, 0.25, 0.5, 0.75 ou 1).
+- Une saisie mensuelle est valide et normale si et seulement pour chaque jour ouvré (= qui devrait être travaillé, ex : du lundi au vendredi) la somme des valeurs saisies est égale à 1 et si le nombre total de jour saisis est bien égal au nombre de jours ouvrés. Par exemple, si j'ai 20 jours dans un mois, le total du mois doit être égal à 20 jours.
+- Si le total d'un jour est inférieur à 1 on doit l'afficher en rouge clair (saisie incomplète)
+- Si le total d'un jour est supérieur à 1 on doit l'afficher en rouge foncé (saisie probablement erronée)
+- Si le total d'une ligne ou le total du mois est inférieur au nombre de jours ouvrés du mois on doit l'afficher en rouge clair (saisie incomplète)
+- Si le total d'une ligne ou le total du mois est supérieur au nombre de jours ouvrés du mois on doit l'afficher en rouge foncé (saisie probablement erronée)
+- Une saisie probablement erronée doit faire l'objet d'un commentaire. La saisie doit tout de même être permise mais un message doit s'afficher sur la page indiquant qu'il y a probablement une erreur et qu'il faut vérifier les totaux en rouge et en préciser la raison.
