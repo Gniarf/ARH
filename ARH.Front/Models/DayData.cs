@@ -3,9 +3,11 @@ namespace ARH.Front.Models
     public class DayData
     {
         /// <summary>
-        /// Clé technique, sans intérêt métier.
+        /// clé en bdd du daydata
         /// </summary>
         public long Id { get; set; }
+        public string DayNumber { get { return Day.ToString("dd"); } }
+        public string DayName { get { return Day.ToString("dddd"); } }
         /// <summary>
         /// Identification du jour, la partie Time est inutilisée
         /// </summary>

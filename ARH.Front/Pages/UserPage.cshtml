@@ -1,0 +1,126 @@
+@page
+@using ARH.Front.Models
+@model UserModel 
+@{
+ViewData["Title"] = "UserPage";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Cours Complet Bootstrap 4</title>
+<meta charset='utf-8'>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/ARH.Front.styles.css" asp-append-version="true" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</style>
+</head>
+<body>
+<form method="post">
+    @{
+    var userNames = Enum.GetValues(typeof(UserName)).Cast<UserName>()
+                        .Select(e => new SelectListItem() { Value = e.ToString(), Text = e.ToString() })
+                        .ToList();
+    userNames.Add(new SelectListItem() { Value = Model.Index.CurrentCalendar.UserName.ToString(), Text = Model.Index.CurrentCalendar.UserName.ToString() });
+}
+@Html.DropDownListFor(x => x.SelectedName, new SelectList(userNames, "Value", "Text"), new {  @name = "SelectedName" })
+
+
+
+
+
+ @{
+    
+    <label for="selectedMonth">Mois:</label>
+    @Html.DropDownListFor(x => x.SelectedMonth, new SelectList(Model.Index.MonthNames), new { @id="selectedMonth" })
+
+   <button type="submit" name="submitBtn1">Submit</button>
+
+ 
+ }
+  </form>
+ <input type="hidden" name="SelectedMonth" value="@Model.Index.SelectedMonth" />
+    <h1>Mois de @Model.Index.CurrentCalendar.Days.FirstOrDefault()?.Day.ToString("MMMM") pour @Model.SelectedName</h1>
+
+
+
+    <table class="table table-bordered">
+  
+            <tr>
+                <th scope="row">Jour</th>
+                
+                       @foreach (var dayData in Model.Index.CurrentCalendar.Days)
+{
+    <td>@dayData.DayName</td>
+   
+
+}</tr><tr>
+                <th scope="row">Date</th>
+                    @foreach (var dayData in Model.Index.CurrentCalendar.Days)
+{
+   
+    <td>@dayData.DayNumber</td>
+    
+
+}</tr><tr>
+                
+                <th scope="row">Sur site</th>
+                          @foreach (var dayData in Model.Index.CurrentCalendar.Days)
+{
+   
+   
+    <td>@dayData.OnSite</td>
+    
+
+}</tr><tr>
+                <th scope="row">À domicile</th>
+                @foreach (var dayData in Model.Index.CurrentCalendar.Days)
+{
+   
+   
+    
+    <td>@dayData.AtHome</td>
+   
+
+}</tr><tr>
+                <th scope="row">CP</th>
+                                  @foreach (var dayData in Model.Index.CurrentCalendar.Days)
+{
+   
+ 
+    <td>@dayData.PayedVacation</td>
+    
+
+}</tr><tr>
+                <th scope="row"> Maladie</th>
+             @foreach (var dayData in Model.Index.CurrentCalendar.Days)
+{
+   
+ 
+
+    <td>@dayData.Sickness</td>
+   
+
+}
+
+     </tr>  <tr>        
+                <th scope="row">Sans solde</th>
+                     @foreach (var dayData in Model.Index.CurrentCalendar.Days)
+{ 
+         <td>@dayData.UnpayedVacation</td>
+       
+    
+    
+}</tr> 
+        
+    </table>
+
+
+
+  
+</body>

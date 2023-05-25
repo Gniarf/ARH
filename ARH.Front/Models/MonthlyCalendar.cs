@@ -1,36 +1,31 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace ARH.Front.Models
 {
     public class MonthlyCalendar
     {
-        [Key]
         public string UserName { get; set; }
-        public IEnumerable<DayData> Days { get; set; }
-        
-        public MonthlyCalendar() 
-        {  
+        public string Comment { get; set; }
+        public List<DayData> Days { get; set; }   
+
+        public MonthlyCalendar()
+        {
+            Comment = string.Empty;
             UserName = string.Empty;
-            Days = new DayData[0];
+            Days = new List<DayData>();        
+            //jours= new joursdata[0];
         }
 
-        public MonthlyCalendar(string userName, int month, int year)
+        public List<string> MonthName(int year, string userName)
         {
             UserName = userName;
-            List<DayData> lst = new ();
-            for (int i = 1; i < 32 ; ++i)
+            List<string> months = new List<string>();
+            for (int i = 1; i <= 12; i++)
+
             {
-                try
-                {
-                    DateTime day = new DateTime(year, month, i);
-                    lst.Add(new DayData { Day = day });
-                } 
-                catch (ArgumentOutOfRangeException)
-                {
-                    break;
-                }
+                DateTime month = new DateTime(year, i, 1);
+                months.Add(month.ToString("MMMM"));
+
             }
-            Days = lst;
+            return months;
         }
     }
 }

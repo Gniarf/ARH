@@ -16,3 +16,94 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+h1{
+
+  font-size: 20px;
+  }
+  div{
+  float: left;
+  
+  }
+  .dateborder{
+   border-bottom: 1rem solid black;
+  
+  }
+  
+  .jour{
+  height:20px;
+  font-size: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 30px;
+  
+  }
+  .date{
+  height:20px;
+  font-size: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 30px;
+  }
+  .table-success{
+  font-size: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 30px;
+  
+  }
+  .color{
+    font-size: 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 30px;
+  }
+  .table-danger{
+  font-size: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 30px;
+  }
+  .joursur{
+  height:20px;
+  font-size: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 30px;
+  }
+  .vendredi{
+  height:20px;
+  font-size: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 30px;
+  }
+  .dropdown{
+  font-weight : bolder;
+  text-decoration: none;
+  outline: none;
+  font-size: 8.5px;
+  display: block;
+  max-width: 40px;
+  overflow: hidden;
+  border: 0;
+  cursor: pointer;
+  
+  
+  }
+  
+  
+  .btn-primary{
+  float: right;
+  }
+  .columnTotal{
+    height:20px;
+  font-size: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 30px; 
+  }
+  
+  .ss{
+  font-size: 10px;
+  }

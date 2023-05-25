@@ -4,7 +4,7 @@
       @{
       ViewData["Title"] = "Home page";
       }
-   
+  
       <div class="tableau ">
       @{
          List<SelectListItem> lst = new List<SelectListItem>();
@@ -13,7 +13,7 @@
          for (int i = 0 ; i < texts.Count() ; ++i)
          {
             SelectListItem item = new ();
-            item.Text = texts[i];
+            item.Text =  (((float)(int)values[i])/100.0f).ToString();
             item.Value = ((int)values[i]).ToString();
             lst.Add(item);
          }
@@ -27,21 +27,19 @@
       <form method="post" id="Formval" asp-page-handler="Submit">  
       <table class="table table-bordered" id="calendar"> 
          <tr>
-               <th class="ss" scope="row">jour</th>
-            @{
+            <th class="ss" scope="row">jour</th>
             <input type="hidden" name="SelectedMonth" value="@Model.SelectedMonth" />
+            @{
                string cssClass;
-            foreach (DayData dd in Model.CurrentCalendar.Days)
-         {
-            cssClass=Model.DayNameToCssclass(dd.DayName);    
+               foreach (DayData dd in Model.CurrentCalendar.Days)
+               {
+                  cssClass=Model.DayNameToCssclass(dd.DayName);    
                   <td class="@cssClass"><span data-toggle="tooltip" data-placement="top" title="@dd.DayName"> @dd.DayName </span></td>
-               
-               
-         } 
+               } 
+            } 
             <td class="color"><span data-toggle="tooltip" data-placement="top" title="total de jour entrée"> total de jour entrée</span></td>
-      } 
       </tr>
-         <tr class="dateborder">
+      <tr class="dateborder">
       <th class="ss" scope="row">Date</th>
       @{
          foreach (DayData dd in Model.CurrentCalendar.Days)
@@ -50,26 +48,23 @@
       }}
          <td class="color"><span data-toggle="tooltip" data-placement="top">  </span></td>
          </tr>
-         <tr data-row="1"> 
+         <tr data-row="1">   
          <th class="ss" scope="row">Jour sur site</th>
       @{ 
          int rowNumber = 1;
          for (int i = 0; i < Model.CurrentCalendar.Days.Count; ++i)
          {
-            cssClass=Model.DayNameToCssclass(Model.CurrentCalendar.Days[i].DayName);    
+            cssClass=Model.DayNameToCssclass(Model.CurrentCalendar.Days[i].DayName);     
                       
-            <td class="@cssClass" >@Html.DropDownListFor(x => Model.CurrentCalendar.Days[i].OnSite, lst, new {@class="dropdown", RowNumber = rowNumber, ColumnNumber = i, Id = $"CurrentCalendar.Days.{i}.OnSite",onchange = "nextSelect(this)",data_previous_value="0"})</td> 
+            <td class="@cssClass" >
+               @Html.DropDownListFor(x => Model.CurrentCalendar.Days[i].OnSite, lst, new {@class="dropdown", RowNumber = rowNumber, ColumnNumber = i, Id = $"CurrentCalendar.Days.{i}.OnSite",onchange = "nextSelect(this)",data_previous_value="0"})
+               @Html.HiddenFor(x => Model.CurrentCalendar.Days[i].Id, new { Id = $"CurrentCalendar.Days.{i}.Id" })
+               @Html.HiddenFor(x => Model.CurrentCalendar.Days[i].Day, new { Day = $"CurrentCalendar.Days.{i}.Day" })
+            </td> 
          }         
-         var totalDaysOnsite=0;
-         foreach (DayData dd in Model.CurrentCalendar.Days)
-         {
-            if (dd.OnSite !=0 ) 
-            {
-               totalDaysOnsite++;
-            }
-         }
+        
 
-         <td class="color" ><span data-toggle="tooltip" data-placement="top" id="total-days-1" onchange="updatesomme"  >  @totalDaysOnsite</span></td>
+         <td class="color" ><span data-toggle="tooltip" data-placement="top" id="total-days-1" onchange="updatesomme"  >  </span></td>
       }
          </tr>
          <tr class="dateborder" data-row="2">
@@ -80,17 +75,15 @@
          { 
          cssClass=Model.DayNameToCssclass(Model.CurrentCalendar.Days[i].DayName);  
          
-         <td class="@cssClass" >@Html.DropDownListFor(x => Model.CurrentCalendar.Days[i].AtHome,lst ,new {@class="dropdown", RowNumber = rowNumber, ColumnNumber = i, Id = $"CurrentCalendar.Days.{i}.AtHome",onchange = "nextSelect(this)",data_previous_value="0"})</td>
+         <td class="@cssClass" >@Html.DropDownListFor(x => Model.CurrentCalendar.Days[i].AtHome,lst ,new {@class="dropdown", RowNumber = rowNumber, ColumnNumber = i, Id = $"CurrentCalendar.Days.{i}.AtHome",onchange = "nextSelect(this)",data_previous_value="0"})
+               @Html.HiddenFor(x => Model.CurrentCalendar.Days[i].Id, new {Id = $"CurrentCalendar.Days.{i}.Id" })
+               @Html.HiddenFor(x => Model.CurrentCalendar.Days[i].Day, new { Day = $"CurrentCalendar.Days.{i}.Day" })
+      
+         </td>  
       }
-         var totalDaysAthome=0;
-         foreach (DayData dd in Model.CurrentCalendar.Days)
-         {
-            if (dd.AtHome !=0 )
-            {
-               totalDaysAthome++;
-            }
-         }
-         <td class="color"> <span data-toggle="tooltip" data-placement="top" id="total-days-2" onchange="updatesomme"> @totalDaysAthome</span></td>
+
+       
+         <td class="color"> <span data-toggle="tooltip" data-placement="top" id="total-days-2" onchange="updatesomme"> </span></td>
       }
       </tr >
          <tr data-row="3">
@@ -101,17 +94,13 @@
       {
          cssClass=Model.DayNameToCssclass(Model.CurrentCalendar.Days[i].DayName); 
          
-         <td class="@cssClass" >@Html.DropDownListFor(x => Model.CurrentCalendar.Days[i].PayedVacation,lst, new {@class="dropdown", RowNumber = rowNumber, ColumnNumber = i, Id = $"CurrentCalendar.Days.{i}.PayedVacation",onchange = "nextSelect(this)",data_previous_value="0"})</td>
-      }
-         var totalDaysPayed=0;
-         foreach (DayData dd in Model.CurrentCalendar.Days)
-         {
-            if (dd.PayedVacation !=0 )
-            {
-               totalDaysPayed++;
-            }
-         }
-         <td class="color"><span data-toggle="tooltip" data-placement="top"  id="total-days-3" onchange="updatesomme">  @totalDaysPayed</span></td>
+         <td class="@cssClass" >@Html.DropDownListFor(x => Model.CurrentCalendar.Days[i].PayedVacation,lst, new {@class="dropdown", RowNumber = rowNumber, ColumnNumber = i, Id = $"CurrentCalendar.Days.{i}.PayedVacation",onchange = "nextSelect(this)",data_previous_value="0"})
+          @Html.HiddenFor(x => Model.CurrentCalendar.Days[i].Id, new {Id = $"CurrentCalendar.Days.{i}.Id" })
+          @Html.HiddenFor(x => Model.CurrentCalendar.Days[i].Day, new { Day = $"CurrentCalendar.Days.{i}.Day" })
+      </td>
+       }
+        
+         <td class="color"><span data-toggle="tooltip" data-placement="top"  id="total-days-3" onchange="updatesomme">  </span></td>    
       }
          </tr>
       <tr data-row="4">
@@ -122,17 +111,15 @@
       {  
          cssClass=Model.DayNameToCssclass(Model.CurrentCalendar.Days[i].DayName); 
          
-         <td class="@cssClass" >@Html.DropDownListFor(x => Model.CurrentCalendar.Days[i].Sickness,lst, new {@class="dropdown", RowNumber = rowNumber, ColumnNumber = i, Id = $"CurrentCalendar.Days.{i}.Sickness",onchange = "nextSelect(this)",data_previous_value="0"})</td>
+         <td class="@cssClass" >@Html.DropDownListFor(x => Model.CurrentCalendar.Days[i].Sickness,lst, new {@class="dropdown", RowNumber = rowNumber, ColumnNumber = i, Id = $"CurrentCalendar.Days.{i}.Sickness",onchange = "nextSelect(this)",data_previous_value="0"})
+         @Html.HiddenFor(x => Model.CurrentCalendar.Days[i].Id, new {Id = $"CurrentCalendar.Days.{i}.Id" })
+          @Html.HiddenFor(x => Model.CurrentCalendar.Days[i].Day, new { Day = $"CurrentCalendar.Days.{i}.Day" })
+       
+         </td>       
          }
-      var totalDaysSickness=0;
-      foreach (DayData dd in Model.CurrentCalendar.Days)
-         {
-            if (dd.Sickness!=0 )
-            {
-               totalDaysSickness++;
-            }
-         }
-      <td class="color"><span data-toggle="tooltip" data-placement="top" id="total-days-4" onchange="updatesomme">  @totalDaysSickness</span></td>}</tr>
+      
+     
+      <td class="color"><span data-toggle="tooltip" data-placement="top" id="total-days-4" onchange="updatesomme">  </span></td>}</tr>
       <tr class="dateborder" data-row="5">
       <th class="ss" scope="row" >Absence non payée</th>
       @{
@@ -140,17 +127,14 @@
       {
       cssClass=Model.DayNameToCssclass(Model.CurrentCalendar.Days[i].DayName); 
       
-      <td class="@cssClass" >@Html.DropDownListFor(x => Model.CurrentCalendar.Days[i].UnpayedVacation, lst, new { @class="dropdown", Id = $"CurrentCalendar.Days.{i}.UnpayedVacation", ColumnNumber = i,onchange = "nextSelect(this)"})</td>
+      <td class="@cssClass" >@Html.DropDownListFor(x => Model.CurrentCalendar.Days[i].UnpayedVacation, lst, new { @class="dropdown", Id = $"CurrentCalendar.Days.{i}.UnpayedVacation", ColumnNumber = i,onchange = "nextSelect(this)"})
+        @Html.HiddenFor(x => Model.CurrentCalendar.Days[i].Id, new {Id = $"CurrentCalendar.Days.{i}.Id" })
+        @Html.HiddenFor(x => Model.CurrentCalendar.Days[i].Day, new { Day = $"CurrentCalendar.Days.{i}.Day" }) 
+
+        </td>   
       }
-      var totalDaysUnpayed=0;
-      foreach (DayData dd in Model.CurrentCalendar.Days)
-         {
-            if (dd.UnpayedVacation !=0 )
-            {
-               totalDaysUnpayed++;
-            }
-         }
-      <td class="color"><span data-toggle="tooltip" data-placement="top"  id="total-days-5" onchange="updatesomme">  @totalDaysUnpayed</span></td>}
+    
+      <td class="color"><span data-toggle="tooltip" data-placement="top"  id="total-days-5" onchange="updatesomme">  </span></td>}
       </tr>
       <tr >
       <th class="ss" scope="row">travail fait </th>
@@ -159,20 +143,15 @@
       {    
                
       <td class="columnTotal"  id="columnTotal" ColumnNumber="@i" ></td>
+    
       }
-      var totalDays=0;
-      foreach (DayData dd in Model.CurrentCalendar.Days)
-         {
-         if (dd.UnpayedVacation !=0 || dd.Sickness!=0 || dd.PayedVacation!=0 || dd.AtHome !=0 || dd.OnSite !=0 )
-            {
-               totalDays=totalDaysUnpayed+totalDaysSickness+totalDaysPayed+totalDaysAthome+totalDaysOnsite;
-            }
-         }}
-      <td class="color"  id="table-days" >@totalDays</td>
+      }
+      <td class="color"  id="table-days" ></td>
       </tr>
       </table>
        <label for="commentaire">commentaire:</label><br>
        <textarea type="text" id="commentaire" name="Commmentaire" style="height: 100px;width:800px;" ></textarea>
+         @Html.HiddenFor(x => Model.CurrentCalendar.UserName, new { UserName = $"CurrentCalendar.Username" })
       <button type="submit" class="btn btn-primary" id="submit-btn"  name="submit2" >Submit</button>
       </form>
       <div style="margin-top: 50px;">
@@ -192,10 +171,6 @@
      </div>
      </div>
       </div>
-      <div ><p id="erreur-superieur" style="display:none;background-color:red;">erreur: le saisie est erroné </p>
-      <p id="erreur-commentaire" style="display:none;background-color:red;">erreur: le commentaire est obligatoire s'il ya une case en rouge  </p>
-      
+      <div ><p id="erreur-superieur" style="display:none;color:red;">erreur: le saisie est erroné </p>
+      <p id="erreur-commentaire" style="display:none;color:red;">erreur: le commentaire est obligatoire s'il ya une case en rouge  </p>
       </div>
-       
-     
-

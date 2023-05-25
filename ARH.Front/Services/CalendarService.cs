@@ -18,9 +18,25 @@ namespace ARH.Front.Services
             {
                 throw new ArgumentNullException();
             }
+
             MonthlyCalendar result = calendarDalService.Get(request);
+
+            // compléter result avec les jours non définis en bdd
+            for (int i = 1; i <= DateTime.DaysInMonth(request.Date.Year, request.Date.Month); i++)
+            {
+                if (!result.Days.Any(day => day.Day.Day == i))
+                {
+                    DateTime newDay = new DateTime(request.Date.Year, request.Date.Month, i);
+                    result.Days.Add(new DayData { Day = newDay });
+                }
+            }
             return result;
-            //return new MonthlyCalendar(request.UserName, request.Date.Month, request.Date.Year);
+        }
+
+        public void SetCalendar(MonthlyCalendar currentCalendar)
+        {
+            // si vérifications métier à faire, c'est ici, avant l'appel au service DAL
+            calendarDalService.SetCalendar(currentCalendar);
         }
     }
-}
+} 
