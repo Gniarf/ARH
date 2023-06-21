@@ -30,8 +30,14 @@ namespace ARH.Front.Services
                     result.Days.Add(new DayData { Day = newDay });
                 }
             }
+            result.Days = result.Days.OrderBy(day => day.Day).ToList();
             return result;
         }
+        public IEnumerable<string> GetDistinctUsernames(CalendarRequest request)
+        {   
+            return calendarDalService.GetDistinctUsernames(request);
+        }
+
 
         public void SetCalendar(MonthlyCalendar currentCalendar)
         {
@@ -39,4 +45,4 @@ namespace ARH.Front.Services
             calendarDalService.SetCalendar(currentCalendar);
         }
     }
-} 
+}

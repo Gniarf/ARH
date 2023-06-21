@@ -16,12 +16,20 @@ namespace ARH.Front.Services
         {
             MonthlyCalendar calendar = new MonthlyCalendar();
             IEnumerable<DailyRecord> records = dbContext.DailyRecordCollection?
-                    .Where(x => x.UserId == request.UserName && x.Day.Month == request.Date.Month && x.Day.Year == x.Day.Year).ToArray() 
+                    .Where(x => x.UserId == request.UserName && x.Day.Month == request.Date.Month && x.Day.Year == x.Day.Year).ToArray()
                     ?? Array.Empty<DailyRecord>();
             calendar.Days = records.To().ToList();
             calendar.UserName = request.UserName;
             return calendar;
         }
+        public IEnumerable<string> GetDistinctUsernames(CalendarRequest request)
+        {
+        
+            IEnumerable<string> records = dbContext.DailyRecordCollection?.Select(x => x.UserId).Distinct().ToArray() ?? Array.Empty<string>();
+
+            return records;
+        }
+
 
         public void SetCalendar(MonthlyCalendar currentCalendar)
         {
@@ -30,7 +38,7 @@ namespace ARH.Front.Services
                 throw new NullReferenceException();
             }
             IEnumerable<DailyRecord> records = currentCalendar.Days.To(currentCalendar.UserName);
-            foreach(DailyRecord record in records)
+            foreach (DailyRecord record in records)
             {
                 DailyRecord? found = dbContext.DailyRecordCollection.FirstOrDefault(x => x.Id == record.Id);
                 if (found != null)
@@ -39,7 +47,7 @@ namespace ARH.Front.Services
                 }
                 dbContext.DailyRecordCollection.Add(record);
             }
-            
+
             dbContext.SaveChanges();
         }
     }

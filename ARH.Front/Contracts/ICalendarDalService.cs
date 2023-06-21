@@ -6,5 +6,7 @@ namespace ARH.Front.Contracts
     {
         MonthlyCalendar Get(CalendarRequest request);
         void SetCalendar(MonthlyCalendar currentCalendar);
+
+         IEnumerable<string> GetDistinctUsernames(CalendarRequest request);
     }
 }

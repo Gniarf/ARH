@@ -5,7 +5,7 @@ namespace ARH.Front.Models
         public string UserName { get; set; }
         public string Comment { get; set; }
         public List<DayData> Days { get; set; }   
-
+        
         public MonthlyCalendar()
         {
             Comment = string.Empty;

@@ -61,12 +61,12 @@ function sum(select) {
         totalDays = totalDays + parseInt(cell.value);
     });
     totalDaysElement.innerText = (totalDays / 100.0).toFixed(2);
-  
-    if (nombrejour < (totalDays/100.0)) {
+
+    if (nombrejour < (totalDays / 100.0)) {
         totalDaysElement = totalDaysElement.style.background = 'red';
 
     }
-    if (nombrejour == (totalDays/100.0)) {
+    if (nombrejour == (totalDays / 100.0)) {
         totalDaysElement = totalDaysElement.style.background = '#00FF00';
 
     }
@@ -165,14 +165,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 erreurMessage.style.display = 'block';
                 erreurcomment.style.display = 'block';
                 allowsubmit = false;
-                break; 
+                break;
             }
-            }
-            if (!allowsubmit) {
-                event.preventDefault();
-            }
+        }
+        if (!allowsubmit) {
+            event.preventDefault();
+        }
 
-        });
+    });
 });
 
 
@@ -182,10 +182,126 @@ document.addEventListener("DOMContentLoaded", function () {
     })
 });
 
-window.addEventListener('load', function() {
+window.addEventListener('load', function () {
     var selects = document.getElementsByClassName('dropdown');
     for (var i = 0; i < selects.length; i++) {
         nextSelect(selects[i]);
     }
 });
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    var totalDaysSum = 0;
+    var totalDaysSum1 = 0;
+    var totalDaysSum2 = 0;
+    var totalDaysSum3 = 0;
+    var totalDaysSum4 = 0;
+    var totalDaysSum5 = 0;
+    var totalDayColumn = 0;
+    var columnTotalCells = document.getElementsByClassName("columnTotal");
+    var tableDaysCell = document.getElementById("table-days");
+    for (var i = 1; i <= 5; i++) {
+        for (var j = 0; j < columnTotalCells.length; j++) {
+            if (i == 1) {
+                var totalCells = document.getElementById('total-days-' + i);
+                var row = document.getElementById('row' + i + '-' + j);
+                totalDaysSum1 += parseFloat(row.innerText.replace(',', '.'));
+                totalCells.innerText = totalDaysSum1;
+            } else if (i == 2) {
+                var totalCells = document.getElementById('total-days-' + i);
+                var row = document.getElementById('row' + i + '-' + j);
+                totalDaysSum2 += parseFloat(row.innerText.replace(',', '.'));
+                totalCells.innerText = totalDaysSum2;
+            } else if (i == 3) {
+                var totalCells = document.getElementById('total-days-' + i);
+                var row = document.getElementById('row' + i + '-' + j);
+                totalDaysSum3 += parseFloat(row.innerText.replace(',', '.'));
+                totalCells.innerText = totalDaysSum3;
+            } else if (i == 4) {
+                var totalCells = document.getElementById('total-days-' + i);
+                var row = document.getElementById('row' + i + '-' + j);
+                totalDaysSum4 += parseFloat(row.innerText.replace(',', '.'));
+                totalCells.innerText = totalDaysSum4;
+            } else if (i == 5) {
+                var totalCells = document.getElementById('total-days-' + i);
+                var row = document.getElementById('row' + i + '-' + j);
+                totalDaysSum5 += parseFloat(row.innerText.replace(',', '.'));
+                totalCells.innerText = totalDaysSum5;
+            }
+
+        }
+    }
+    totalDaysSum = totalDaysSum1 + totalDaysSum2 + totalDaysSum3 + totalDaysSum4 + totalDaysSum5;
+
+    tableDaysCell.innerText = totalDaysSum;
+    var calendar = document.getElementById('calendar');
+    var columnTotalCells = document.getElementsByClassName("columnTotal");
+
+
+    for (var i = 0; i < columnTotalCells.length; i++) {
+        var columnNumber = columnTotalCells[i].getAttribute("columnnumber");
+        var cellsInColumn = calendar.querySelectorAll('[columnnumber="' + columnNumber + '"]');
+        var total = 0;
+
+        for (var j = 0; j < cellsInColumn.length; j++) {
+            var val = cellsInColumn[j].innerText;
+            var intval = parseFloat(val.replace(',', '.'));
+            if (!isNaN(intval)) {
+                total += parseFloat(intval);
+
+            }
+
+        }
+
+        for (var k = 0; k < columnTotalCells.length; k++) {
+            if (columnTotalCells[k].getAttribute("ColumnNumber") === columnNumber & columnTotalCells[k].innerHTML == 0) {
+                columnTotalCells[k].innerHTML = total;
+                var item = columnTotalCells[k];
+                if (total > 1) {
+                    item.innerHTML = total;
+                    item = item.style.background = "red";
+                } else if (total < 1) {
+                    item.innerHTML = total;
+                    item = item.style.background = "#FA8072";
+
+                } else if (total == 1) {
+                    item.innerHTML = total;
+                    item = item.style.background = "#00FF00";
+
+                }
+                break;
+            }
+        }
+    }
+    var nombrejour = 0
+    for (var j = 0; j < columnTotalCells.length; j++) {
+        var rowz = document.getElementById('row1-' + j);
+        if (rowz.classList.contains('joursur')) {
+            nombrejour++;
+        }
+        if (rowz.classList.contains('vendredi')) {
+            nombrejour++;
+        }
+    }
+    if (nombrejour > totalDaysSum) {
+        tableDaysCell = tableDaysCell.style.background = '#FA8072';
+
+    }
+    if (nombrejour < totalDaysSum) {
+        tableDaysCell = tableDaysCell.style.background = 'red';
+
+    }
+    if (nombrejour == totalDaysSum) {
+        tableDaysCell = tableDaysCell.style.background = '#00FF00';
+
+    }
+
+
+
+
+
+});
+
 
