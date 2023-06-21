@@ -6,7 +6,7 @@ public class DataContext : DbContext
 {
     protected readonly IConfiguration? configuration;
 
-    public DataContext() : this(new ARH.Front.Migrations.SqlMigrationConfiguration()) { }
+    //public DataContext() : this(new ARH.Front.Migrations.SqlMigrationConfiguration()) { }
     public DataContext(IConfiguration configuration)
     {
         this.configuration = configuration;
@@ -18,4 +18,5 @@ public class DataContext : DbContext
     }
 
     public DbSet<DailyRecord>? DailyRecordCollection { get; set; }
+    public DbSet<Comment>? CommentCollection { get; set; }
 }

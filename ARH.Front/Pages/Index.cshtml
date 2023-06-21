@@ -17,7 +17,7 @@
             item.Value = ((int)values[i]).ToString();
             lst.Add(item);
          }
-      <form method="post" asp-page-handler="SelectedMonth">
+         <form method="post" asp-page-handler="SelectedMonth">
             <label for="selectedMonth">Mois:</label>
             @Html.DropDownListFor(x => x.SelectedMonth, new SelectList(Model.MonthNames), new { @id="selectedMonth",@name="selectedMonth" })
          </form>
@@ -25,6 +25,7 @@
       }
          <h1>Mois de @Model.CurrentCalendar.Days.FirstOrDefault()?.Day.ToString("MMMM") pour @Model.CurrentCalendar.UserName</h1>
       <form method="post" id="Formval" asp-page-handler="Submit">  
+         @Html.HiddenFor(x => x.CurrentCalendar.RequestDate)
       <table class="table table-bordered" id="calendar"> 
          <tr>
             <th class="ss" scope="row">jour</th>
@@ -149,9 +150,9 @@
       <td class="color"  id="table-days" ></td>
       </tr>
       </table>
-       <label for="commentaire">commentaire:</label><br>
-       <textarea type="text" id="commentaire" name="Commmentaire" style="height: 100px;width:800px;" ></textarea>
-         @Html.HiddenFor(x => Model.CurrentCalendar.UserName, new { UserName = $"CurrentCalendar.Username" })
+      <label for="commentaire">commentaire:</label><br>
+      @Html.TextAreaFor(x => x.CurrentCalendar.Comment, 5, 20, new { style = "height: 100px;width:800px;" })
+      @Html.HiddenFor(x => Model.CurrentCalendar.UserName, new { UserName = $"CurrentCalendar.Username" })
       <button type="submit" class="btn btn-primary" id="submit-btn"  name="submit2" >Submit</button>
       </form>
       <div style="margin-top: 50px;">

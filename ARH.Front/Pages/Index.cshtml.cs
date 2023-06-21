@@ -24,7 +24,7 @@ public class IndexModel : PageModel
         CurrentCalendar = new MonthlyCalendar();
 
         MonthNames = new List<string>();
-        var monthNames = CultureInfo.CurrentCulture.DateTimeFormat.MonthNames;
+        string[] monthNames = CultureInfo.CurrentCulture.DateTimeFormat.MonthNames;
         MonthNames.AddRange(monthNames);
     }
     public string DayNameToCssclass(string Day)
@@ -48,7 +48,7 @@ public class IndexModel : PageModel
 
     public void OnGet()
     {
-        CurrentCalendar = calendarService.GetCalendar(new Models.CalendarRequest { UserName = User?.Identity?.Name ?? string.Empty, Date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1) });
+        CurrentCalendar = calendarService.GetCalendar(new CalendarRequest { UserName = User?.Identity?.Name ?? string.Empty, Date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1) });
         MonthNames = CurrentCalendar.MonthName(DateTime.Now.Year, User?.Identity?.Name ?? string.Empty);
     }
 
@@ -56,24 +56,19 @@ public class IndexModel : PageModel
     {
         if (!string.IsNullOrEmpty(SelectedMonth))
         {
-
             int monthNumber = DateTime.ParseExact(SelectedMonth, "MMMM", CultureInfo.CurrentCulture).Month;
-            CurrentCalendar = calendarService.GetCalendar(new Models.CalendarRequest { UserName = User?.Identity?.Name ?? string.Empty, Date = new DateTime(DateTime.Now.Year, monthNumber, 1) });
+            CurrentCalendar = calendarService.GetCalendar(new CalendarRequest { UserName = User?.Identity?.Name ?? string.Empty, Date = new DateTime(DateTime.Now.Year, monthNumber, 1) });
             MonthNames = CurrentCalendar.MonthName(DateTime.Now.Year, User?.Identity?.Name ?? string.Empty);
         }
     }
 
     public void OnPostSubmit()
     {
+        int targetMonth = string.IsNullOrEmpty(SelectedMonth)
+                            ? DateTime.Now.Month 
+                            : DateTime.ParseExact(SelectedMonth, "MMMM", CultureInfo.CurrentCulture).Month;
         calendarService.SetCalendar(CurrentCalendar);
-        if (!string.IsNullOrEmpty(SelectedMonth))
-        {
-            int monthNumber = DateTime.ParseExact(SelectedMonth, "MMMM", CultureInfo.CurrentCulture).Month;
-            CurrentCalendar = calendarService.GetCalendar(new Models.CalendarRequest { UserName = User?.Identity?.Name ?? string.Empty, Date = new DateTime(DateTime.Now.Year, monthNumber, 1) });
-        }
-        else
-        {
-            CurrentCalendar = calendarService.GetCalendar(new Models.CalendarRequest { UserName = User?.Identity?.Name ?? string.Empty, Date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1) });
-        }
+        var request = new CalendarRequest { UserName = User?.Identity?.Name ?? string.Empty, Date = new DateTime(DateTime.Now.Year, targetMonth, 1) };
+        CurrentCalendar = calendarService.GetCalendar(request);
     }
 }
