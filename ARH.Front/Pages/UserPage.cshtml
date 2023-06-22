@@ -10,7 +10,7 @@ ViewData["Title"] = "UserPage";
      @{
    
     <label for="selectedMonth">Mois:</label>
-    @Html.DropDownListFor(x => x.SelectedMonth, new SelectList(Model.Index.MonthNames), new { @id="selectedMonth" })
+    @Html.DropDownListFor(x => x.SelectedMonth, new SelectList(Model.Index.MonthNames), new { @id="selectedMonth"})
 
   <button type="submit" id="submit-btn" name="submit-Btn" >Submit</button>}
   </form>
@@ -93,4 +93,7 @@ ViewData["Title"] = "UserPage";
       <td class="color"  id="table-days" ></td>
       </tr>
 </table>
-
+@{
+<label for="commentaire">commentaire:</label><br>
+      <textarea style = "height: 100px;width:800px;" readonly>@Model.Index.CurrentCalendar.Comment</textarea>
+}

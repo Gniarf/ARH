@@ -19,7 +19,7 @@
          }
          <form method="post" asp-page-handler="SelectedMonth">
             <label for="selectedMonth">Mois:</label>
-            @Html.DropDownListFor(x => x.SelectedMonth, new SelectList(Model.MonthNames), new { @id="selectedMonth",@name="selectedMonth" })
+            @Html.DropDownListFor(x => x.SelectedMonth, new SelectList(Model.MonthNames), new { @id="selectedMonth",@name="selectedMonth"})
          </form>
       
       }

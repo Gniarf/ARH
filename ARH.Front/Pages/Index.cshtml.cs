@@ -47,9 +47,10 @@ public class IndexModel : PageModel
     }
 
     public void OnGet()
-    {
+    {    
         CurrentCalendar = calendarService.GetCalendar(new CalendarRequest { UserName = User?.Identity?.Name ?? string.Empty, Date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1) });
         MonthNames = CurrentCalendar.MonthName(DateTime.Now.Year, User?.Identity?.Name ?? string.Empty);
+        SelectedMonth = DateTime.Now.ToString("MMMM");
     }
 
     public void OnPostSelectedMonth()
