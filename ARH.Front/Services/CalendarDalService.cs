@@ -62,9 +62,11 @@ namespace ARH.Front.Services
             {
                 dbContext.CommentCollection.Remove(commentFound);
             }
-            dbContext.CommentCollection.Add(new Comment { Date = currentCalendar.RequestDate, Text = currentCalendar.Comment, UserId = currentCalendar.UserName });
+          if (currentCalendar.Comment != null){
 
+            dbContext.CommentCollection.Add(new Comment { Date = currentCalendar.RequestDate, Text = currentCalendar.Comment, UserId = currentCalendar.UserName });
+            
             dbContext.SaveChanges();
-        }
+        }}
     }
 }

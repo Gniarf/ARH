@@ -78,6 +78,13 @@ h1{
   white-space: nowrap;
   max-width: 30px;
   }
+  .bg-success{
+    height:20px;
+    font-size: 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 30px;
+  }
   .dropdown{
   font-weight : bolder;
   text-decoration: none;

@@ -34,7 +34,7 @@
                string cssClass;
                foreach (DayData dd in Model.CurrentCalendar.Days)
                {
-                  cssClass=Model.DayNameToCssclass(dd.DayName);    
+                  cssClass=Model.DayNameToCssclass(dd.DayName,dd.Day);    
                   <td class="@cssClass"><span data-toggle="tooltip" data-placement="top" title="@dd.DayName"> @dd.DayName </span></td>
                } 
             } 
@@ -44,7 +44,7 @@
       <th class="ss" scope="row">Date</th>
       @{
          foreach (DayData dd in Model.CurrentCalendar.Days)
-         {   cssClass=Model.DayNameToCssclass(dd.DayName);    
+         {   cssClass=Model.DayNameToCssclass(dd.DayName,dd.Day);    
                   <td class="@cssClass" ><span data-toggle="tooltip" data-placement="top" title="@dd.DayNumber"> @dd.DayNumber </span></td>
       }}
          <td class="color"><span data-toggle="tooltip" data-placement="top">  </span></td>
@@ -55,7 +55,7 @@
          int rowNumber = 1;
          for (int i = 0; i < Model.CurrentCalendar.Days.Count; ++i)
          {
-            cssClass=Model.DayNameToCssclass(Model.CurrentCalendar.Days[i].DayName);     
+            cssClass=Model.DayNameToCssclass(Model.CurrentCalendar.Days[i].DayName,Model.CurrentCalendar.Days[i].Day);     
                       
             <td class="@cssClass" >
                @Html.DropDownListFor(x => Model.CurrentCalendar.Days[i].OnSite, lst, new {@class="dropdown", RowNumber = rowNumber, ColumnNumber = i, Id = $"CurrentCalendar.Days.{i}.OnSite",onchange = "nextSelect(this)",data_previous_value="0"})
@@ -74,7 +74,7 @@
          ++rowNumber;
          for (int i = 0; i<Model.CurrentCalendar.Days.Count; ++i)
          { 
-         cssClass=Model.DayNameToCssclass(Model.CurrentCalendar.Days[i].DayName);  
+         cssClass=Model.DayNameToCssclass(Model.CurrentCalendar.Days[i].DayName,Model.CurrentCalendar.Days[i].Day);  
          
          <td class="@cssClass" >@Html.DropDownListFor(x => Model.CurrentCalendar.Days[i].AtHome,lst ,new {@class="dropdown", RowNumber = rowNumber, ColumnNumber = i, Id = $"CurrentCalendar.Days.{i}.AtHome",onchange = "nextSelect(this)",data_previous_value="0"})
                @Html.HiddenFor(x => Model.CurrentCalendar.Days[i].Id, new {Id = $"CurrentCalendar.Days.{i}.Id" })
@@ -93,7 +93,7 @@
          ++rowNumber;
          for (int i = 0; i < Model.CurrentCalendar.Days.Count; ++i)
       {
-         cssClass=Model.DayNameToCssclass(Model.CurrentCalendar.Days[i].DayName); 
+       cssClass=Model.DayNameToCssclass(Model.CurrentCalendar.Days[i].DayName,Model.CurrentCalendar.Days[i].Day);  
          
          <td class="@cssClass" >@Html.DropDownListFor(x => Model.CurrentCalendar.Days[i].PayedVacation,lst, new {@class="dropdown", RowNumber = rowNumber, ColumnNumber = i, Id = $"CurrentCalendar.Days.{i}.PayedVacation",onchange = "nextSelect(this)",data_previous_value="0"})
           @Html.HiddenFor(x => Model.CurrentCalendar.Days[i].Id, new {Id = $"CurrentCalendar.Days.{i}.Id" })
@@ -110,7 +110,7 @@
          ++rowNumber;
          for (int i = 0; i < Model.CurrentCalendar.Days.Count; ++i)
       {  
-         cssClass=Model.DayNameToCssclass(Model.CurrentCalendar.Days[i].DayName); 
+         cssClass=Model.DayNameToCssclass(Model.CurrentCalendar.Days[i].DayName,Model.CurrentCalendar.Days[i].Day);  
          
          <td class="@cssClass" >@Html.DropDownListFor(x => Model.CurrentCalendar.Days[i].Sickness,lst, new {@class="dropdown", RowNumber = rowNumber, ColumnNumber = i, Id = $"CurrentCalendar.Days.{i}.Sickness",onchange = "nextSelect(this)",data_previous_value="0"})
          @Html.HiddenFor(x => Model.CurrentCalendar.Days[i].Id, new {Id = $"CurrentCalendar.Days.{i}.Id" })
@@ -126,7 +126,7 @@
       @{
       for (int i = 0; i < Model.CurrentCalendar.Days.Count; ++i)
       {
-      cssClass=Model.DayNameToCssclass(Model.CurrentCalendar.Days[i].DayName); 
+     cssClass=Model.DayNameToCssclass(Model.CurrentCalendar.Days[i].DayName,Model.CurrentCalendar.Days[i].Day);  
       
       <td class="@cssClass" >@Html.DropDownListFor(x => Model.CurrentCalendar.Days[i].UnpayedVacation, lst, new { @class="dropdown", Id = $"CurrentCalendar.Days.{i}.UnpayedVacation", ColumnNumber = i,onchange = "nextSelect(this)"})
         @Html.HiddenFor(x => Model.CurrentCalendar.Days[i].Id, new {Id = $"CurrentCalendar.Days.{i}.Id" })
@@ -138,7 +138,7 @@
       <td class="color"><span data-toggle="tooltip" data-placement="top"  id="total-days-5" onchange="updatesomme">  </span></td>}
       </tr>
       <tr >
-      <th class="ss" scope="row">travail fait </th>
+      <th class="ss" scope="row">total </th>
       @{
       for (int i = 0; i < Model.CurrentCalendar.Days.Count; ++i)
       {    
@@ -151,9 +151,10 @@
       </tr>
       </table>
       <label for="commentaire">commentaire:</label><br>
-      @Html.TextAreaFor(x => x.CurrentCalendar.Comment, 5, 20, new { style = "height: 100px;width:800px;" })
+      @Html.TextAreaFor(x => x.CurrentCalendar.Comment, 5, 20, new { style = "height: 100px;width:800px;", id="Comment" })
       @Html.HiddenFor(x => Model.CurrentCalendar.UserName, new { UserName = $"CurrentCalendar.Username" })
-      <button type="submit" class="btn btn-primary" id="submit-btn"  name="submit2" >Submit</button>
+     @Html.HiddenFor(x => Model.Comment, new { Comment = $"CurrentCalendar.Comment" })
+     <button type="submit" class="btn btn-primary" id="submit-btn"  name="submit2" >Submit</button> 
       </form>
       <div style="margin-top: 50px;">
        <div style="display: flex;">

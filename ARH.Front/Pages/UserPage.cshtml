@@ -10,12 +10,14 @@ ViewData["Title"] = "UserPage";
      @{
    
     <label for="selectedMonth">Mois:</label>
-    @Html.DropDownListFor(x => x.SelectedMonth, new SelectList(Model.Index.MonthNames), new { @id="selectedMonth"})
+    @Html.DropDownListFor(x => x.SelectedMonth, new SelectList(Model.Index.MonthNames), new { @id="SelectedMonth"})
 
   <button type="submit" id="submit-btn" name="submit-Btn" >Submit</button>}
   </form>
    <input type="hidden" name="SelectedMonth" value="@Model.Index.SelectedMonth" />
-     <h1>Mois de @Model.Index.CurrentCalendar.Days.FirstOrDefault()?.Day.ToString("MMMM") pour @Model.SelectedName</h1>
+   @if (Model.IsSubmited==true)
+   {
+    <h1>Mois de @Model.Index.CurrentCalendar.Days.FirstOrDefault()?.Day.ToString("MMMM") pour @Model.SelectedName</h1>
      <table class="table table-bordered" id="calendar">
   
             <tr>
@@ -23,7 +25,7 @@ ViewData["Title"] = "UserPage";
         
         @foreach (var dayData in Model.Index.CurrentCalendar.Days)
      {    
-     string cssclass=Model.Index.DayNameToCssclass(dayData.DayName); 
+     string cssclass=Model.Index.DayNameToCssclass(dayData.DayName,dayData.Day); 
      <td class="@cssclass">@dayData.DayName</td>
           }  
        <td class="color"><span data-toggle="tooltip" data-placement="top" title="total de jour entrée"> total de jour entrée</span></td>
@@ -31,7 +33,7 @@ ViewData["Title"] = "UserPage";
      <th scope="row">Date</th>
     
        @foreach (var dayData in Model.Index.CurrentCalendar.Days)
-   {   string cssclass=Model.Index.DayNameToCssclass(dayData.DayName); 
+   {   string cssclass=Model.Index.DayNameToCssclass(dayData.DayName,dayData.Day); 
         <td class="@cssclass">@dayData.DayNumber</td>
     }<td class="color"><span data-toggle="tooltip" data-placement="top">  </span></td>
     </tr><tr>
@@ -39,7 +41,7 @@ ViewData["Title"] = "UserPage";
        @{   
          for (int i = 0; i < Model.Index.CurrentCalendar.Days.Count; ++i)
       {  
-        string cssclass=Model.Index.DayNameToCssclass(Model.Index.CurrentCalendar.Days[i].DayName);
+        string cssclass=Model.Index.DayNameToCssclass(Model.Index.CurrentCalendar.Days[i].DayName,Model.Index.CurrentCalendar.Days[i].Day);
         float val=Model.stringValuetoInt(Model.Index.CurrentCalendar.Days[i].OnSite);
        <td class="@cssclass"  id="row1-@i" columnnumber="@i">@val</td>
         } }<td class="color" ><span data-toggle="tooltip" data-placement="top" id="total-days-1"  >  </span></td>
@@ -48,7 +50,7 @@ ViewData["Title"] = "UserPage";
       @{   
          for (int i = 0; i < Model.Index.CurrentCalendar.Days.Count; ++i)
       {  
-        string cssclass=Model.Index.DayNameToCssclass(Model.Index.CurrentCalendar.Days[i].DayName);
+    string cssclass=Model.Index.DayNameToCssclass(Model.Index.CurrentCalendar.Days[i].DayName,Model.Index.CurrentCalendar.Days[i].Day);
         float val=Model.stringValuetoInt(Model.Index.CurrentCalendar.Days[i].AtHome); 
        <td class="@cssclass" id="row2-@i" columnnumber="@i">@val</td>
         } }
@@ -58,7 +60,7 @@ ViewData["Title"] = "UserPage";
       @{   
          for (int i = 0; i < Model.Index.CurrentCalendar.Days.Count; ++i)
       {  
-        string cssclass=Model.Index.DayNameToCssclass(Model.Index.CurrentCalendar.Days[i].DayName);
+       string cssclass=Model.Index.DayNameToCssclass(Model.Index.CurrentCalendar.Days[i].DayName,Model.Index.CurrentCalendar.Days[i].Day);
         float val=Model.stringValuetoInt(Model.Index.CurrentCalendar.Days[i].PayedVacation); 
        <td class="@cssclass" id="row3-@i" columnnumber="@i" >@val</td>
         } }<td class="color" ><span data-toggle="tooltip" data-placement="top" id="total-days-3"  >  </span></td>
@@ -67,7 +69,7 @@ ViewData["Title"] = "UserPage";
  @{   
          for (int i = 0; i < Model.Index.CurrentCalendar.Days.Count; ++i)
       {  
-        string cssclass=Model.Index.DayNameToCssclass(Model.Index.CurrentCalendar.Days[i].DayName);
+       string cssclass=Model.Index.DayNameToCssclass(Model.Index.CurrentCalendar.Days[i].DayName,Model.Index.CurrentCalendar.Days[i].Day);
         float val=Model.stringValuetoInt(Model.Index.CurrentCalendar.Days[i].Sickness); 
        <td class="@cssclass" id="row4-@i" columnnumber="@i">@val</td>
         } }<td class="color" ><span data-toggle="tooltip" data-placement="top" id="total-days-4"   >  </span></td>
@@ -76,7 +78,7 @@ ViewData["Title"] = "UserPage";
     @{   
          for (int i = 0; i < Model.Index.CurrentCalendar.Days.Count; ++i)
       {  
-        string cssclass=Model.Index.DayNameToCssclass(Model.Index.CurrentCalendar.Days[i].DayName);
+       string cssclass=Model.Index.DayNameToCssclass(Model.Index.CurrentCalendar.Days[i].DayName,Model.Index.CurrentCalendar.Days[i].Day);
         float val=Model.stringValuetoInt(Model.Index.CurrentCalendar.Days[i].UnpayedVacation);  
        <td class="@cssclass" id="row5-@i" columnnumber="@i">@val</td>
         } }<td class="color"  ><span data-toggle="tooltip" data-placement="top" id="total-days-5"></span></td></tr> 
@@ -93,7 +95,7 @@ ViewData["Title"] = "UserPage";
       <td class="color"  id="table-days" ></td>
       </tr>
 </table>
-@{
+
 <label for="commentaire">commentaire:</label><br>
       <textarea style = "height: 100px;width:800px;" readonly>@Model.Index.CurrentCalendar.Comment</textarea>
 }

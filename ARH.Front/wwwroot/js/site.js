@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', function () {
         var tableDays = document.getElementById('table-days');
         var columnTotalElements = document.getElementsByClassName('columnTotal');
         var erreurMessage = document.getElementById('erreur-superieur');
-        var commentField = document.getElementById('commentaire');
+        var commentField = document.getElementById('Comment');
         var erreurcomment = document.getElementById('erreur-commentaire');
         var allowsubmit = true;
         for (var i = 0; i < columnTotalElements.length; i++) {

@@ -1,0 +1,62 @@
+@page
+@using ARH.Front.Models
+@model JOURModel
+@{
+ViewData["Title"] = "Jourferies";
+}
+@{
+ <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Intitulé</th>
+      </tr>
+    </thead> 
+    <tbody>
+      <tr>
+        <td>01/01/@DateTime.Now.Year</td>
+        <td>Jour de l'an</td>
+      </tr>
+      <tr>
+        <td>10/04/@DateTime.Now.Year</td>
+        <td>Lundi de Pâques</td>
+      </tr>
+      <tr>
+        <td>01/05/@DateTime.Now.Year</td>
+        <td>Fête du Travail</td>
+      </tr>
+      <tr>
+        <td>08/05/@DateTime.Now.Year</td>
+        <td>Fête Victoire</td>
+      </tr>
+      <tr>
+        <td>18/05/@DateTime.Now.Year</td>
+        <td>Ascension</td>
+      </tr>
+      <tr>
+        <td>29/05/@DateTime.Now.Year</td>
+        <td>Lundi de Pentecôte</td>
+      </tr>
+      <tr>
+        <td>14/07/@DateTime.Now.Year</td>
+        <td>Fête nationale</td>
+      </tr>
+      <tr>
+        <td>15/08/@DateTime.Now.Year</td>
+        <td>Assomption</td>
+      </tr>
+      <tr>
+        <td>01/11/@DateTime.Now.Year</td>
+        <td>Toussaint</td>
+      </tr>
+      <tr>
+        <td>11/11/@DateTime.Now.Year</td>
+        <td>Armistice</td>
+      </tr>
+      <tr>
+        <td>25/12/@DateTime.Now.Year</td>
+        <td>Noël</td>
+      </tr>
+    </tbody>
+  </table>
+}

@@ -19,6 +19,7 @@ public class UserModel : PageModel
     public string SelectedMonth { get; set; } = string.Empty;
     [BindProperty]
     public IEnumerable<string> UserNames { get; set; }
+    public bool IsSubmited{get;set;}=false;
     public UserModel(ILogger<IndexModel> logger, ICalendarService calendarService)
     {
         _logger = logger;
@@ -27,6 +28,8 @@ public class UserModel : PageModel
         Index = new IndexModel(_logger, calendarService);
 
     }
+
+    
     public float stringValuetoInt(Length init)
     {
         float val = 0;
@@ -77,7 +80,7 @@ public class UserModel : PageModel
         }
         Index.CurrentCalendar = Index.CurrentCalendar;
 
-
+       IsSubmited=true;
     }
 
 }
