@@ -19,4 +19,6 @@ public class DataContext : DbContext
 
     public DbSet<DailyRecord>? DailyRecordCollection { get; set; }
     public DbSet<Comment>? CommentCollection { get; set; }
+    public DbSet<Holyday>? HolydayCollection { get; set; }
+    public DbSet<HolydayUser>? HolydayUserCollection { get; set; }
 }

@@ -85,6 +85,45 @@ namespace ARH.Front.Migrations.SqlServerMigrations
 
                     b.ToTable("DailyRecordCollection");
                 });
+
+            modelBuilder.Entity("ARH.Front.Models.Holyday", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("YearIncluded")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("HolydayCollection");
+                });
+
+            modelBuilder.Entity("ARH.Front.Models.HolydayUser", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("HolydayId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("HolydayUserCollection");
+                });
 #pragma warning restore 612, 618
         }
     }

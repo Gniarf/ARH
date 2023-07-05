@@ -4,16 +4,16 @@ dotnet build
 :: pour utiliser ces scripts correctement, penser à décommenter le constructeur vide du DataContext concerné et à le faire UNIQUEMENT le temps de la migration
 
 :: Création Sqlite
-set ASPNETCORE_ENVIRONMENT=Development
-dotnet-ef migrations add TableForComments --context ARH.Front.Services.SqliteDataContext --output-dir Migrations/SqliteMigrations 
+::set ASPNETCORE_ENVIRONMENT=Development
+::dotnet-ef migrations add Holydays --context ARH.Front.Services.SqliteDataContext --output-dir Migrations/SqliteMigrations 
 
 :: Destruction de la dernière migration Sqlite
 ::set ASPNETCORE_ENVIRONMENT=Development
 ::dotnet-ef migrations remove --context SqliteDataContext
 
 :: Création SqlServer
-::set ASPNETCORE_ENVIRONMENT=Tests
-::dotnet-ef migrations add TableForComments --context DataContext --output-dir Migrations/SqlServerMigrations
+set ASPNETCORE_ENVIRONMENT=Tests
+dotnet-ef migrations add Holydays --context DataContext --output-dir Migrations/SqlServerMigrations
 
 :: Destruction de la dernière migration SqlServer
 ::set ASPNETCORE_ENVIRONMENT=Tests

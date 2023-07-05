@@ -31,7 +31,7 @@ namespace ARH.Front.Services
             {
                 calendar.Comment = comment.Text;
             }
-            
+
             return calendar;
         }
         public IEnumerable<string> GetDistinctUsernames(CalendarRequest request)
@@ -56,17 +56,107 @@ namespace ARH.Front.Services
                 }
                 dbContext.DailyRecordCollection.Add(record);
             }
-            Comment? commentFound = dbContext.CommentCollection.FirstOrDefault(x => x.Date == currentCalendar.RequestDate 
+            Comment? commentFound = dbContext.CommentCollection.FirstOrDefault(x => x.Date == currentCalendar.RequestDate
                                                                                 && x.UserId == currentCalendar.UserName);
             if (commentFound != null)
             {
                 dbContext.CommentCollection.Remove(commentFound);
             }
-          if (currentCalendar.Comment != null){
+            if (currentCalendar.Comment != null)
+            {
 
-            dbContext.CommentCollection.Add(new Comment { Date = currentCalendar.RequestDate, Text = currentCalendar.Comment, UserId = currentCalendar.UserName });
-            
+                dbContext.CommentCollection.Add(new Comment { Date = currentCalendar.RequestDate, Text = currentCalendar.Comment, UserId = currentCalendar.UserName });
+
+                dbContext.SaveChanges();
+            }
+        }
+
+        public IEnumerable<Holyday> GetHolday(HolydayRequest request)
+        {
+            if (dbContext.HolydayCollection == null || dbContext.HolydayUserCollection == null)
+            {
+                throw new NullReferenceException();
+            }
+            IEnumerable<Holyday> result = dbContext.HolydayCollection.Where(x => x.YearIncluded == false || x.Date.Year == request.Year);
+            var specificHolydays = from hu in dbContext.HolydayUserCollection
+                                   join h in dbContext.HolydayCollection on hu.HolydayId equals h.Id
+                                   where hu.UserId == request.UserId
+                                   select h;
+            return result.Concat(specificHolydays);
+        }
+
+        public void SetHolyday(HolydaySetRequest request)
+        {
+            if (dbContext.HolydayCollection == null || dbContext.HolydayUserCollection == null)
+            {
+                throw new NullReferenceException();
+            }
+            // création d'un jour férié
+            if (request.HolydayId == default)
+            {
+                var entry = dbContext.HolydayCollection.Add(new Holyday { Date = request.Date, YearIncluded = request.YearIncluded, });
+                AddHolydayUsers(entry.Entity.Id, request.UserIdCollection);
+            }
+            else
+            {
+                Holyday? h = dbContext.HolydayCollection.FirstOrDefault(x => x.Id == request.HolydayId);
+                if (h == null)
+                {
+                    throw new ArgumentException("L'identifiant de jour férié n'est pas présent en base de données");
+                }
+                h.Date = request.Date;
+                h.YearIncluded = request.YearIncluded;
+                RemoveHolydayUsers(request.HolydayId);
+                AddHolydayUsers(request.HolydayId, request.UserIdCollection);
+            }
             dbContext.SaveChanges();
-        }}
+        }
+
+        public void DeleteHolyday(int holydayId)
+        {
+            if (dbContext.HolydayCollection == null || dbContext.HolydayUserCollection == null)
+            {
+                throw new NullReferenceException();
+            }
+            if (holydayId == default)
+            {
+                throw new ArgumentException();
+            }
+            RemoveHolydayUsers(holydayId);
+            Holyday? h = dbContext.HolydayCollection.FirstOrDefault(x => x.Id == holydayId);
+            if (h != null)
+            {
+                dbContext.HolydayCollection.Remove(h);
+            }
+            dbContext.SaveChanges();
+        }
+
+        private void AddHolydayUsers(int holydayId, IEnumerable<string> userIdCollection)
+        {
+            if (dbContext.HolydayUserCollection == null)
+            {
+                throw new NullReferenceException();
+            }
+            if (userIdCollection.Any())
+            {
+                foreach (string userId in userIdCollection)
+                {
+                    dbContext.HolydayUserCollection.Add(new HolydayUser { UserId = userId, HolydayId = holydayId });
+                }
+            }
+        }
+
+        private void RemoveHolydayUsers(int holydayId)
+        {
+            if (dbContext.HolydayUserCollection == null)
+            {
+                throw new NullReferenceException();
+            }
+            var found = dbContext.HolydayUserCollection.Where(x => x.HolydayId == holydayId);
+            if (found.Any())
+            {
+                dbContext.HolydayUserCollection.RemoveRange(found);
+            }
+        }
     }
 }
