@@ -5,7 +5,8 @@
 ViewData["Title"] = "Jourferies";
 }
 @{
- <table class="table table-bordered">
+<table class="table table-bordered">
+  <form method="post" >
     <thead>
       <tr>
         <th>Date</th>
@@ -18,9 +19,9 @@ ViewData["Title"] = "Jourferies";
         <td>Jour de l'an</td>
       </tr>
       <tr>
-        <td>10/04/@DateTime.Now.Year</td>
+        <td><input type="text" name="dateedit" value="10/04/@DateTime.Now.Year"></td>
         <td>Lundi de Pâques</td>
-      </tr>
+       </tr>
       <tr>
         <td>01/05/@DateTime.Now.Year</td>
         <td>Fête du Travail</td>
@@ -34,7 +35,7 @@ ViewData["Title"] = "Jourferies";
         <td>Ascension</td>
       </tr>
       <tr>
-        <td>29/05/@DateTime.Now.Year</td>
+        <td><input type="text" name="dateedit" value="29/05/@DateTime.Now.Year"></td>
         <td>Lundi de Pentecôte</td>
       </tr>
       <tr>
@@ -58,5 +59,8 @@ ViewData["Title"] = "Jourferies";
         <td>Noël</td>
       </tr>
     </tbody>
-  </table>
+  <input type="submit" value="Envoyer">
+  </form>
+</table>
+
 }

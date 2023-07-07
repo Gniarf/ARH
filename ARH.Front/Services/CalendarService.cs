@@ -45,4 +45,5 @@ namespace ARH.Front.Services
             calendarDalService.SetCalendar(currentCalendar);
         }
     }
+
 }

@@ -67,8 +67,9 @@ namespace ARH.Front.Services
 
                 dbContext.CommentCollection.Add(new Comment { Date = currentCalendar.RequestDate, Text = currentCalendar.Comment, UserId = currentCalendar.UserName });
 
-                dbContext.SaveChanges();
+
             }
+            dbContext.SaveChanges();
         }
 
         public IEnumerable<Holyday> GetHolday(HolydayRequest request)

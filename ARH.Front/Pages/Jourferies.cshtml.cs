@@ -12,30 +12,32 @@ public class JOURModel : PageModel
 
     private readonly ICalendarService calendarService;
 
-    
-    
-    public JOURModel(ILogger<IndexModel> logger, ICalendarService calendarService)
-    {
-        _logger = logger;
+        // Ajoutez une liste pour stocker les dates
+        public List<DateTime> Dates { get; set; }
 
-    }
+        public JOURModel(ILogger<IndexModel> logger, ICalendarService calendarService)
+        {
+            _logger = logger;
+            this.calendarService = calendarService;
 
-    
-    
+            // Initialisez la liste des dates
+            Dates = new List<DateTime>();
+        }
+
+        public void OnGet()
+        {
       
-    public void OnGet()
-    {
+        }
 
-      
-      
+        public void OnPost()
+        {
+             
+           
+            }
 
-    }
-    public void OnPost()
-    {
-    
-    }
+         
+    }     
 
-}
 
 
 
