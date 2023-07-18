@@ -12,10 +12,15 @@ function goToNextCombo(select) {
     var currentRow = $(select).closest('tr');
     var firstday = currentRow.find('td:first');
     var lastCell = currentRow.find('td:last');
+    var nextCell = currentCell.next();
     var isLastFriday = currentCell.hasClass('vendredi') && currentCell.is(lastCell) && firstday.hasClass('table-success');
     var isLastDayOfWeek = currentCell.hasClass('vendredi') && currentCell.index() === (lastCell.index() - 3) && firstday.hasClass('table-success');
     var islast = currentCell.index() === (lastCell.index() - 1);
-    if (isLastFriday) {
+    if (nextCell.hasClass('table-warning')) {
+        nextCell = nextCell.next();
+        nextSelect = nextCell.find('select');
+    }
+    else if (isLastFriday) {
         var nextRow = currentRow.next();
         nextSelect = nextRow.find('td:eq(2) select');
     } else if (isLastDayOfWeek) {
@@ -25,7 +30,19 @@ function goToNextCombo(select) {
         var nextRow = currentRow.next();
         nextSelect = nextRow.find('td:eq(0) select');
     } else if (currentCell.hasClass('vendredi')) {
-        nextSelect = $(select).closest('td').nextAll('td').eq(2).find('select');
+        var nextCell = currentCell.nextAll('td').eq(2);
+        var nextCellSelect = nextCell.find('select');
+
+         if (nextCellSelect.length) {
+            if (nextCell.hasClass('table-warning')) {
+                nextSelect = currentCell.nextAll('td').eq(3).find('select');
+            } else {
+                nextSelect = currentCell.nextAll('td').eq(2).find('select');
+            }
+        } else {
+            nextSelect = null; // Ne pas sauter la colonne
+        }
+
     } else if (currentCell.index() === 2) {
         nextSelect = currentCell.next('td').find('select');
     }
@@ -43,6 +60,7 @@ function setupTable() {
 }
 
 function sum(select) {
+  
     var row = select.closest('tr');
     var totalDaysElement = document.getElementById('total-days-' + row.dataset.row);
     var cellstrav = row.getElementsByClassName('joursur');
@@ -61,15 +79,17 @@ function sum(select) {
         totalDays = totalDays + parseInt(cell.value);
     });
     totalDaysElement.innerText = (totalDays / 100.0).toFixed(2);
+    
 
-    if (nombrejour < (totalDays / 100.0)) {
+    
+  if (nombrejour < (totalDays / 100.0)) {
         totalDaysElement = totalDaysElement.style.background = 'red';
 
     }
     if (nombrejour == (totalDays / 100.0)) {
         totalDaysElement = totalDaysElement.style.background = '#00FF00';
 
-    }
+    } 
 }
 function updatesomme() {
     var totalDaysElements = document.querySelectorAll('[id^=total-days]');
@@ -79,8 +99,6 @@ function updatesomme() {
     }
     return sum;
 }
-
-
 var calendar = document.getElementById('calendar');
 function sumcol(select) {
     var columnNumber = select.getAttribute("ColumnNumber");
@@ -95,6 +113,7 @@ function sumcol(select) {
             }
         });
     }
+    var columnElement = document.querySelector('.columnTotal[columnnumber="' + columnNumber + '"]');
     var columnTotals = calendar.getElementsByClassName("columnTotal");
     for (var i = 0; i < columnTotals.length; i++) {
         var item = columnTotals[i];
@@ -103,14 +122,19 @@ function sumcol(select) {
                 item.innerHTML = (totalDays / 100.0).toFixed(2);
                 item = item.style.background = "red";
             } else if (totalDays < 100) {
-                item.innerHTML = (totalDays / 100.0).toFixed(2);
+                item.innerHTML = (totalDays / 100.0).toFixed(2); 
                 item = item.style.background = "#FA8072";
 
-            } else if (totalDays == 100) {
+            } else if (totalDays == 100  ) {
                 item.innerHTML = (totalDays / 100.0).toFixed(2);
-                item = item.style.background = "#00FF00";
-
+                if( $(select).closest('td').hasClass("table-warning")){
+                   item.style.background = "red";
+                }else{
+                 item.style.background = "#00FF00";
+                }
             }
+            
+         
             return;
         }
     }
@@ -138,15 +162,12 @@ function nextSelect(select) {
     }
     if (nombrejour > totalDays) {
         totalDaysElements = totalDaysElements.style.background = '#FA8072';
-
     }
     if (nombrejour < totalDays) {
         totalDaysElements = totalDaysElements.style.background = 'red';
-
     }
     if (nombrejour == totalDays) {
         totalDaysElements = totalDaysElements.style.background = '#00FF00';
-
     }
 
 }

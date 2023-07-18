@@ -34,7 +34,7 @@ namespace ARH.Front.Services
             return result;
         }
         public IEnumerable<string> GetDistinctUsernames(CalendarRequest request)
-        {   
+        {
             return calendarDalService.GetDistinctUsernames(request);
         }
 
@@ -43,6 +43,19 @@ namespace ARH.Front.Services
         {
             // si vérifications métier à faire, c'est ici, avant l'appel au service DAL
             calendarDalService.SetCalendar(currentCalendar);
+        }
+        public void SetHolyday(HolydaySetRequest request)
+        {
+            // si vérifications métier à faire, c'est ici, avant l'appel au service DAL
+            calendarDalService.SetHolyday(request);
+        }
+        public void GetHolyday(HolydayRequest request)
+        {
+            if (request == null)
+            {
+                throw new ArgumentNullException();
+            }
+            IEnumerable<Holyday> result = calendarDalService.GetHolday(request);
         }
     }
 

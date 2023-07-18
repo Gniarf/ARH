@@ -43,7 +43,7 @@ public class IndexModel : PageModel
                 cssClass = "vendredi";
                 break;
             default:
-            cssClass = IsHoliday(date) ? "bg-success" : "joursur";
+            cssClass = IsHoliday(date) ? "table-warning" : "joursur";
             break;
     }
                 
