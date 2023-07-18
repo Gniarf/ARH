@@ -127,7 +127,7 @@ function sumcol(select) {
 
             } else if (totalDays == 100  ) {
                 item.innerHTML = (totalDays / 100.0).toFixed(2);
-                if( $(select).closest('td').hasClass("table-warning")){
+                if( $(select).closest('td').hasClass("table-warning") || $(select).closest('td').hasClass("table-success") ){
                    item.style.background = "red";
                 }else{
                  item.style.background = "#00FF00";
