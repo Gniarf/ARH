@@ -84,6 +84,7 @@ namespace ARH.Front.Services
                                    where hu.UserId == request.UserId
                                    select h;
             return result.Concat(specificHolydays);
+            
         }
 
         public void SetHolyday(HolydaySetRequest request)

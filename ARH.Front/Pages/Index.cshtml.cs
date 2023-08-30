@@ -30,8 +30,8 @@ public class IndexModel : PageModel
     }
 
 
-    public string DayNameToCssclass(string Day ,DateTime date)
-    {  
+    public string DayNameToCssclass(string Day, DateTime date)
+    {
         string cssClass;
         switch (Day)
         {
@@ -43,41 +43,42 @@ public class IndexModel : PageModel
                 cssClass = "vendredi";
                 break;
             default:
-            cssClass = IsHoliday(date) ? "table-warning" : "joursur";
-            break;
-    }
-                
-        
+                cssClass = IsHoliday(date) ? "table-warning" : "joursur";
+                break;
+        }
+
+
         return cssClass;
     }
- 
 
-public bool IsHoliday(DateTime date)
-{
-    // Liste des jours fériés avec leurs dates
-    Dictionary<DateTime, string> holidays = new Dictionary<DateTime, string>
+
+    public bool IsHoliday(DateTime date)
     {
-        { new DateTime(DateTime.Now.Year, 1, 1), "Jour de l'an" },
-        { new DateTime(DateTime.Now.Year, 4, 10), "Lundi de Pâques" },
-        { new DateTime(DateTime.Now.Year, 5, 1), "Fête du Travail" },
-        { new DateTime(DateTime.Now.Year, 5, 8), "Fête Victoire" },
-        { new DateTime(DateTime.Now.Year, 5, 18), "Ascension" },
-        { new DateTime(DateTime.Now.Year, 5, 29), "Lundi de Pentecôte" },
-        { new DateTime(DateTime.Now.Year, 7, 14), "Fête nationale" },
-        { new DateTime(DateTime.Now.Year, 8, 15), "Assomption" },
-        { new DateTime(DateTime.Now.Year, 11, 1), "Toussaint" },
-        { new DateTime(DateTime.Now.Year, 11, 11), "Armistice" },
-        { new DateTime(DateTime.Now.Year, 12, 25), "Noël" }
-    };
-
-    // Vérifiez si la date est un jour férié
-    return holidays.ContainsKey(date.Date);
-}
+        // Liste des jours fériés avec leurs dates
+        // Dictionary<DateTime, string> holidays = new Dictionary<DateTime, string>
+        // {
+        //     { new DateTime(DateTime.Now.Year, 1, 1), "Jour de l'an" },
+        //     { new DateTime(DateTime.Now.Year, 4, 10), "Lundi de Pâques" },
+        //     { new DateTime(DateTime.Now.Year, 5, 1), "Fête du Travail" },
+        //     { new DateTime(DateTime.Now.Year, 5, 8), "Fête Victoire" },
+        //     { new DateTime(DateTime.Now.Year, 5, 18), "Ascension" },
+        //     { new DateTime(DateTime.Now.Year, 5, 29), "Lundi de Pentecôte" },
+        //     { new DateTime(DateTime.Now.Year, 7, 14), "Fête nationale" },
+        //     { new DateTime(DateTime.Now.Year, 8, 15), "Assomption" },
+        //     { new DateTime(DateTime.Now.Year, 11, 1), "Toussaint" },
+        //     { new DateTime(DateTime.Now.Year, 11, 11), "Armistice" },
+        //     { new DateTime(DateTime.Now.Year, 12, 25), "Noël" }
+        // };
+        // Vérifiez si la date est un jour férié
+        // return holidays.ContainsKey(date.Date);
+        IEnumerable<Holyday> holydays = calendarService.GetHolidaysForUser(new HolydayRequest { UserId = User?.Identity?.Name ?? string.Empty, Year = date.Year });
+        return holydays.Any(x => x.Date == date);
+    }
 
     public void OnGet()
     {
         CurrentCalendar = calendarService.GetCalendar(new CalendarRequest { UserName = User?.Identity?.Name ?? string.Empty, Date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1) });
-        MonthNames = CurrentCalendar.MonthName(DateTime.Now.Year, User?.Identity?.Name ?? string.Empty);
+        MonthNames = CurrentCalendar.MonthName();
         SelectedMonth = DateTime.Now.ToString("MMMM");
     }
 
@@ -87,7 +88,7 @@ public bool IsHoliday(DateTime date)
         {
             int monthNumber = DateTime.ParseExact(SelectedMonth, "MMMM", CultureInfo.CurrentCulture).Month;
             CurrentCalendar = calendarService.GetCalendar(new CalendarRequest { UserName = User?.Identity?.Name ?? string.Empty, Date = new DateTime(DateTime.Now.Year, monthNumber, 1) });
-            MonthNames = CurrentCalendar.MonthName(DateTime.Now.Year, User?.Identity?.Name ?? string.Empty);
+            MonthNames = CurrentCalendar.MonthName();
         }
     }
 

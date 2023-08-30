@@ -47,15 +47,13 @@ namespace ARH.Front.Services
         public void SetHolyday(HolydaySetRequest request)
         {
             // si vérifications métier à faire, c'est ici, avant l'appel au service DAL
-            calendarDalService.SetHolyday(request);
+             calendarDalService.SetHolyday(request);
         }
-        public void GetHolyday(HolydayRequest request)
+        public IEnumerable<Holyday> GetHolidaysForUser(HolydayRequest request)
         {
-            if (request == null)
-            {
-                throw new ArgumentNullException();
-            }
-            IEnumerable<Holyday> result = calendarDalService.GetHolday(request);
+            
+
+            return calendarDalService.GetHolday(request);
         }
     }
 

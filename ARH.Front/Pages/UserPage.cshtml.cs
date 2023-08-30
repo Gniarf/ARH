@@ -19,17 +19,26 @@ public class UserModel : PageModel
     public string SelectedMonth { get; set; } = string.Empty;
     [BindProperty]
     public IEnumerable<string> UserNames { get; set; }
-    public bool IsSubmited{get;set;}=false;
+    [BindProperty]
+    public int SelectedYear { get; set; } = DateTime.Now.Year;
+    public IEnumerable<int> SelectableYears { get; set; }
+    public bool IsSubmited { get; set; } = false;
     public UserModel(ILogger<IndexModel> logger, ICalendarService calendarService)
     {
         _logger = logger;
         this.calendarService = calendarService;
         UserNames = new List<string>();
         Index = new IndexModel(_logger, calendarService);
-
+        List<int> selectableYears = new();
+        int maxYear = DateTime.Now.Year;
+        for (int year = 2023; year <= maxYear; ++year)
+        {
+            selectableYears.Add(year);
+        }
+        SelectableYears = selectableYears;
     }
 
-    
+
     public float stringValuetoInt(Length init)
     {
         float val = 0;
@@ -62,10 +71,10 @@ public class UserModel : PageModel
         }
         Index.CurrentCalendar = Index.CurrentCalendar;
         Index.CurrentCalendar = calendarService.GetCalendar(new Models.CalendarRequest { UserName = SelectedName ?? string.Empty, Date = DateTime.Today });
-        Index.MonthNames = Index.CurrentCalendar.MonthName(DateTime.Now.Year, SelectedName ?? string.Empty);
+        Index.MonthNames = Index.CurrentCalendar.MonthName();
         UserNames = calendarService.GetDistinctUsernames(new Models.CalendarRequest { });
         SelectedMonth = DateTime.Now.ToString("MMMM");
-      
+
 
     }
     public void OnPost()
@@ -76,11 +85,11 @@ public class UserModel : PageModel
 
             UserNames = calendarService.GetDistinctUsernames(new Models.CalendarRequest { });
             int monthNumber = DateTime.ParseExact(SelectedMonth, "MMMM", CultureInfo.CurrentCulture).Month;
-            Index.CurrentCalendar = calendarService.GetCalendar(new Models.CalendarRequest { UserName = SelectedName ?? string.Empty, Date = new DateTime(DateTime.Now.Year, monthNumber, 1) });
+            Index.CurrentCalendar = calendarService.GetCalendar(new Models.CalendarRequest { UserName = SelectedName ?? string.Empty, Date = new DateTime(SelectedYear, monthNumber, 1) });
         }
         Index.CurrentCalendar = Index.CurrentCalendar;
 
-       IsSubmited=true;
+        IsSubmited = true;
     }
 
 }

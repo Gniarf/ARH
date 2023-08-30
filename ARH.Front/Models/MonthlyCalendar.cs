@@ -14,13 +14,12 @@ namespace ARH.Front.Models
             Days = new List<DayData>();
         }
 
-        public List<string> MonthName(int year, string userName)
+        public List<string> MonthName()
         {
-            UserName = userName;
-            List<string> months = new List<string>();
+            List<string> months = new();
             for (int i = 1; i <= 12; i++)
             {
-                DateTime month = new DateTime(year, i, 1);
+                DateTime month = new(2023, i, 1);
                 months.Add(month.ToString("MMMM"));
             }
             return months;

@@ -3,43 +3,62 @@ using ARH.Front.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Globalization;
-namespace ARH.Front.Pages;
+using System.Linq;
 
-
-public class JOURModel : PageModel
+namespace ARH.Front.Pages
 {
-    private readonly ILogger<IndexModel> _logger;
-
-    private readonly ICalendarService calendarService;
-
+    public class JOURModel : PageModel
+    {
+        private readonly ILogger<IndexModel> _logger;
+        private readonly ICalendarService calendarService;
+        public MonthlyCalendar CurrentCalendar { get; set; }
         // Ajoutez une liste pour stocker les dates
-        public List<DateTime> Dates { get; set; }
-
+        [BindProperty]
+        public List<Holyday> Dates { get; set; }
+        public ICollection<string> UserIdcollection { get; set; } = new string[0];
         public JOURModel(ILogger<IndexModel> logger, ICalendarService calendarService)
         {
             _logger = logger;
             this.calendarService = calendarService;
+            CurrentCalendar = new MonthlyCalendar();
 
             // Initialisez la liste des dates
-            Dates = new List<DateTime>();
+            Dates = new List<Holyday>();
+            UserIdcollection = new List<string>();
         }
 
         public void OnGet()
         {
-      
+            var request = new HolydayRequest
+            {
+
+
+                UserId = User?.Identity?.Name ?? string.Empty,
+
+                Year = DateTime.Now.Year
+
+
+            };
+            Dates = calendarService.GetHolidaysForUser(request).ToList();
         }
+
 
         public void OnPost()
         {
-             
-           
+            if (ModelState.IsValid)
+            {
+                for (int i=0;i<Dates.Count;i++)
+                {
+                    var request = new HolydaySetRequest
+                    {
+                        Date = Dates[i].Date,
+                        YearIncluded = Dates[i].YearIncluded,
+                        HolydayId = Dates[i].Id,                    
+                    };
+                    calendarService.SetHolyday(request);
+                }
             }
+        }
 
-         
-    }     
-
-
-
-
-
-
+    }
+}

@@ -13,7 +13,7 @@
          for (int i = 0 ; i < texts.Count() ; ++i)
          {
             SelectListItem item = new ();
-            item.Text =  (((float)(int)values[i])/100.0f).ToString();
+            item.Text =  (((float)values[i])/100.0f).ToString();
             item.Value = ((int)values[i]).ToString();
             lst.Add(item);
          }

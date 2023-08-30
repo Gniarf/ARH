@@ -9,9 +9,9 @@ ViewData["Title"] = "UserPage";
   @Html.DropDownListFor(x => x.SelectedName, new SelectList(Model.UserNames), new {  @name = "SelectedName" })
      @{
    
-    <label for="selectedMonth">Mois:</label>
-    @Html.DropDownListFor(x => x.SelectedMonth, new SelectList(Model.Index.MonthNames), new { @id="SelectedMonth"})
-
+   <label for="selectedMonth">Mois:</label>
+   @Html.DropDownListFor(x => x.SelectedMonth, new SelectList(Model.Index.MonthNames), new { @id = "SelectedMonth"})
+   @Html.DropDownListFor(x => x.SelectedYear, new SelectList(Model.SelectableYears), new { @id = "SelectedYear"})
   <button type="submit" id="submit-btn" name="submit-Btn" >Submit</button>}
   </form>
    <input type="hidden" name="SelectedMonth" value="@Model.Index.SelectedMonth" />

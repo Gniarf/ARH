@@ -1,8 +1,6 @@
 -- SQLite
-UPDATE DailyRecordCollection
-Set UserId="BMSOFT/NK" WHERE  Id=4 ;
 
 
-SELECT * FROM DailyRecordCollection;
 
-
+SELECT * FROM HolydayCollection;
+SELECT * FROM HolydayUserCollection;

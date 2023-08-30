@@ -1,66 +1,38 @@
 @page
-@using ARH.Front.Models
 @model JOURModel
 @{
-ViewData["Title"] = "Jourferies";
+    ViewData["Title"] = "Joursferies";
 }
-@{
-<table class="table table-bordered">
-  <form method="post" >
-    <thead>
-      <tr>
-        <th>Date</th>
-        <th>Intitulé</th>
-      </tr>
-    </thead> 
-    <tbody>
-      <tr>
-        <td>01/01/@DateTime.Now.Year</td>
-        <td>Jour de l'an</td>
-      </tr>
-      <tr>
-        <td><input type="text" name="dateedit" value="10/04/@DateTime.Now.Year"></td>
-        <td>Lundi de Pâques</td>
-       </tr>
-      <tr>
-        <td>01/05/@DateTime.Now.Year</td>
-        <td>Fête du Travail</td>
-      </tr>
-      <tr>
-        <td>08/05/@DateTime.Now.Year</td>
-        <td>Fête Victoire</td>
-      </tr>
-      <tr>
-        <td>18/05/@DateTime.Now.Year</td>
-        <td>Ascension</td>
-      </tr>
-      <tr>
-        <td><input type="text" name="dateedit" value="29/05/@DateTime.Now.Year"></td>
-        <td>Lundi de Pentecôte</td>
-      </tr>
-      <tr>
-        <td>14/07/@DateTime.Now.Year</td>
-        <td>Fête nationale</td>
-      </tr>
-      <tr>
-        <td>15/08/@DateTime.Now.Year</td>
-        <td>Assomption</td>
-      </tr>
-      <tr>
-        <td>01/11/@DateTime.Now.Year</td>
-        <td>Toussaint</td>
-      </tr>
-      <tr>
-        <td>11/11/@DateTime.Now.Year</td>
-        <td>Armistice</td>
-      </tr>
-      <tr>
-        <td>25/12/@DateTime.Now.Year</td>
-        <td>Noël</td>
-      </tr>
-    </tbody>
-  <input type="submit" value="Envoyer">
-  </form>
-</table>
 
-}
+<form method="post">
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Year Included</th>
+                <th>User IDs</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (var i = 0; i < Model.Dates.Count; i++)
+            {
+                <tr>
+                      @Html.HiddenFor(x => Model.Dates[i].Id, new { Id = $"Model.Dates.{i}.Id" })
+                    <td>
+                         @Html.TextBoxFor(x => x.Dates[i].Date, new {  @class = "form-control", required = "required" ,value = Model.Dates[i].Date.ToString("yyyy-MM-dd")})
+                    </td>
+                    <td>
+                        @Html.CheckBoxFor(x => x.Dates[i].YearIncluded)
+                    </td>
+                    <td>
+                        @for (var j=0 ; j < Model.UserIdcollection.Count ; i++) {
+                            @Html.TextBoxFor(x => Model.UserIdcollection.ElementAt(j), new { @class = "form-control" })
+                        } 
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <button type="submit">Submit</button>
+    <button type="ajouter">ajouter un jour férié</button>
+</form>
