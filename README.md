@@ -13,6 +13,7 @@ lt : long terme
 - [mt] Les jours fériés doivent être calculés autant que possible pour ne pas avoir à les resaisir chaque année 
 - [mt] Il doit être possible de définir des jours fériés particuliers (les jours monégasques, les jours d'Alsace, d'autres pays, etc.) et de dire à quels utilisateurs ils s'appliquent.
 - [mt] Les jours fériés présents pendant un mois doivent être nommés (ex : lorsqu'on passe la souris sur le 25 décembre, le nom "Noël" doit s'afficher en tooltip)
+- [mt] Permettre de consulter les congés de tous les salariés, savoir qui est en vacances quand, qui a combien de jours disponibles, et surtout vérifier les congés simultanés de plusieurs salariés pour s'assurer qu'il y a toujours un responsable à chaque pôle présent.
 - [mt] Donc un panneau d'administration technique doit exister et permettre de les saisir. Et bien sûr son accès doit être restreint (gestion de droits via un rôle Active Directory ?).
 - [mt] Idéalement toutes les actions doivent être tracées
 - [lt] Une page doit permettre la consultation de ces traces avec un moteur de recherche
